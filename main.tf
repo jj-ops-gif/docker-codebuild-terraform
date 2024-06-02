@@ -64,3 +64,20 @@ resource "aws_codebuild_project" "codebuild_project" {
     }
   }
 }
+
+resource "aws_codebuild_webhook" "example" {
+  project_name = aws_codebuild_project.codebuild_project.name
+  build_type   = "BUILD"
+  
+  filter_group {
+    filter {
+      type    = "EVENT"
+      pattern = "PUSH"
+    }
+
+    # filter {
+    #   type    = "BASE_REF"
+    #   pattern = "main"
+    # }
+  }
+}
